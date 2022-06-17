@@ -1,3 +1,5 @@
+import java.util.Arrays;
+
 public class Hangman {
 
     public static String[] words = {"ant", "baboon", "badger", "bat", "bear", "beaver", "camel",
@@ -67,19 +69,30 @@ public class Hangman {
     " =========\n"};
 
     public static void main(String[] args) {
-        System.out.println("+---+\n" +
-        "|   |\n" +
-        "    |\n" +
-        "    |\n" +
-        "    |\n" +
-        "    |\n" +
-        "=========\n");
+        System.out.println(gallows[0]);
+        String word = pickRandomWord(words);
+        int numOfCharacters = word.length();
+        System.out.println(word);
+        System.out.println(numOfCharacters);
+        System.out.print("Word: ");
+        for (int i = 0; i < numOfCharacters; i++){
+            System.out.print("_ ");
+        }
+        
 
 
 
 
 
 
+
+    }
+
+    public static String pickRandomWord(String[] words){
+        int numOfWords = words.length;
+        double randomNum = Math.random() * numOfWords;
+        int randomInt = (int) randomNum;
+        return words[randomInt];
     }
 
 }
