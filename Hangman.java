@@ -1,4 +1,6 @@
 import java.util.Scanner;
+import java.util.Arrays;
+import java.util.ArrayList;
 
 public class Hangman {
     static Scanner scan = new Scanner(System.in);
@@ -75,6 +77,7 @@ public class Hangman {
         int numOfCharacters = word.length();
         System.out.println(word);
         System.out.println(numOfCharacters);
+       
         System.out.print("Word: ");
         for (int i = 0; i < numOfCharacters; i++){
             System.out.print("_ ");
@@ -84,8 +87,18 @@ public class Hangman {
         System.out.println("\n");
         System.out.print("Guess: ");
         char guess = scan.next().charAt(0);
-        int matchingIndex = findMatch(word, guess);
-        System.out.println(matchingIndex);
+        Integer[] indexArray = findMatch(word, guess);
+        System.out.println(Arrays.toString(indexArray));
+
+        for(int i = 0; i < indexArray.length; i++){
+            for(int j = 0; j < numOfCharacters; j++){
+                if(j == indexArray[i]){
+                    System.out.print(word.charAt(indexArray[i]));
+                }
+            }
+        }
+
+        
 
         
        
@@ -106,14 +119,15 @@ public class Hangman {
         return words[randomInt];
     }
 
-    public static int findMatch(String word, char guess){
-        int index = 0;
-        for(int i = 0; i < word.length(); i++){
-            if (word.charAt(i) == guess){
-                index = i;
-            }
+    public static Integer[] findMatch(String word, char guess){
+        int index = word.indexOf(guess);
+        ArrayList<Integer> indexes = new ArrayList<Integer>();
+        while(index >= 0){
+           indexes.add(index);
+           index = word.indexOf(guess, index + 1);
         }
-        return index;
+        Integer[] indexArray = indexes.toArray(new Integer[indexes.size()]);
+        return indexArray;
     }
 
 }
