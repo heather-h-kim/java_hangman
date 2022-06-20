@@ -77,8 +77,6 @@ public class Hangman {
 
         String word = pickRandomWord(words);
         int numOfCharacters = word.length();
-        System.out.println(word);
-        System.out.println(numOfCharacters);
         
         char[] placeholder = new char[numOfCharacters];
         for(int i = 0; i < numOfCharacters; i++){
@@ -91,6 +89,7 @@ public class Hangman {
 
         while( missedTries < 6){
 
+        System.out.println(gallows[missedTries]);    
         System.out.print("Word: ");
         printPlaceholder(placeholder);
         System.out.println("\n");
@@ -111,8 +110,15 @@ public class Hangman {
         }else{
             misses[missedTries] = guess;
             missedTries++;
+
             
         }
+    }
+
+    if(missedTries == 6){
+        System.out.println(gallows[missedTries]);  
+        System.out.println("RIP");
+        System.out.println("The word was: " + word );
     }
         
 
