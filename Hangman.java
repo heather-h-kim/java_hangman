@@ -72,53 +72,58 @@ public class Hangman {
     " =========\n"};
 
     public static void main(String[] args) {
-        System.out.println(gallows[0]);
+
+       
+
         String word = pickRandomWord(words);
         int numOfCharacters = word.length();
         System.out.println(word);
         System.out.println(numOfCharacters);
+        
         char[] placeholder = new char[numOfCharacters];
         for(int i = 0; i < numOfCharacters; i++){
             placeholder[i] = '_';
         }
+        
+        char [] misses = new char[6];
+
+        int missedTries = 0;
+
+        while( missedTries < 6){
+
         System.out.print("Word: ");
         printPlaceholder(placeholder);
         System.out.println("\n");
         System.out.print("Miss: ");
+        printMiss(misses);
         System.out.println("\n");
         System.out.print("Guess: ");
         char guess = scan.next().charAt(0);
-        Integer[] indexArray = findMatch(word, guess);
-        System.out.println(Arrays.toString(indexArray));
 
-        for(int i = 0; i < indexArray.length; i++){
-            for(int j = 0; j < numOfCharacters; j++){
-                if(j == indexArray[i]){
-                    System.out.print(word.charAt(indexArray[i]));
-                }
-            }
+        boolean isContain = checkMatch(word, guess);
+
+
+        if(isContain){
+            Integer[] indexArray = findMatch(word, guess);
+            System.out.println(Arrays.toString(indexArray));
+            updatePlaceholder(indexArray, placeholder, guess);
+
+        }else{
+            misses[missedTries] = guess;
+            missedTries++;
+            
         }
-
-        System.out.println("\n");
-
-        updatePlaceholder(indexArray, placeholder, guess);
-        printPlaceholder(placeholder);
-
-
-
+    }
         
-
-        
-       
-        
-
-
-
-
-
 
 
     }
+
+    public static char pickGuess(char guess){
+        char createdGuess = guess;
+        return createdGuess;
+    }
+
 
     public static String pickRandomWord(String[] words){
         int numOfWords = words.length;
@@ -131,6 +136,12 @@ public class Hangman {
         for (int i = 0; i < placeholder.length; i++){
             System.out.print(placeholder[i] + " ");
         }
+    }
+
+    public static boolean checkMatch(String word, char guess){
+        String guessString = String.valueOf(guess);
+        boolean isContain = word.contains(guessString);
+        return isContain;
     }
 
     public static Integer[] findMatch(String word, char guess){
@@ -149,6 +160,19 @@ public class Hangman {
             placeholder[indexArray[i]] = guess;
         }
     }
+
+    public static void printMiss(char[] misses ){
+        for(int i = 0; i < misses.length; i++){
+            System.out.print(misses[i]);
+        }
+       
+
+       
+    }
+
+    
+
+    
 
 
 
